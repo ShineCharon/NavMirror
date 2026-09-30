@@ -1,0 +1,13 @@
+# 行结尾规则：Git 的 core.autocrlf=true 会把 checkout 的 .sh 转成 CRLF，
+# WSL bash 直接语法报错（2026-09-22 实测）。显式固定：
+*.sh  text eol=lf
+*.bat text eol=crlf
+# 无扩展名的 Gradle wrapper 脚本同样必须 LF
+gradlew text eol=lf
+# 生成物/密钥不做任何转换
+*.pem  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.apk  binary
+*.keystore binary

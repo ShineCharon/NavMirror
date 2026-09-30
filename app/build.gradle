@@ -1,0 +1,65 @@
+plugins { id 'com.android.application' }
+
+// Machine-specific deployment settings stay out of Git.
+def deployment = new Properties()
+def deploymentFile = rootProject.file('navmirror.local.properties')
+if (deploymentFile.isFile()) {
+    deploymentFile.withInputStream { deployment.load(it) }
+}
+def mirrorDomain = providers.gradleProperty('navmirrorDomain').orNull ?:
+        System.getenv('NAVMIRROR_DOMAIN') ?: deployment.getProperty('domain', 'example.invalid')
+if (!(mirrorDomain ==~ /(?i)[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?/) ||
+        mirrorDomain.contains('..') || !mirrorDomain.contains('.')) {
+    throw new GradleException('navmirrorDomain must be a hostname without scheme, path or port.')
+}
+
+android {
+    namespace 'com.colin.navmirror'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.colin.navmirror'
+        minSdk 26
+        targetSdk 34
+        versionCode 2
+        versionName '1.1'
+        buildConfigField 'String', 'TESLA_DOMAIN', '"' + mirrorDomain + '"'
+    }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = false
+        }
+    }
+}
+
+// Assets are embedded verbatim in APKs, independently of .gitignore.
+// Deliberate private release builds require an explicit command-line opt-in.
+def verifyReleaseTls = tasks.register('verifyReleaseTls') {
+    // No outputs: check every build, including when merged assets are up to date.
+    doLast {
+        def tlsFiles = android.sourceSets.main.assets.srcDirs + android.sourceSets.release.assets.srcDirs
+        def hasTlsMaterial = tlsFiles.any { dir ->
+            !fileTree(dir) { include '**/*.pem', '**/*.p12', '**/*.jks', '**/*.keystore' }.isEmpty()
+        }
+        if (hasTlsMaterial && providers.gradleProperty('allowPrivateTlsInRelease').orNull != 'true') {
+            throw new GradleException('Release APK would embed TLS material. Do not publish it. ' +
+                    'For private use only, explicitly pass -PallowPrivateTlsInRelease=true.')
+        }
+    }
+}
+tasks.configureEach { task ->
+    if (task.name == 'mergeReleaseAssets') {
+        task.dependsOn(verifyReleaseTls)
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}

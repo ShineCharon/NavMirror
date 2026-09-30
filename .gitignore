@@ -1,0 +1,46 @@
+# ===== 构建产物 / IDE / Gradle =====
+.gradle/
+.gradle-local/
+build/
+app/build/
+local.properties
+navmirror.local.properties
+.env
+.env.*
+!.env.example
+*.apk
+*.aab
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ===== 密钥材料（不入库；本地放回 assets 后才能构建出 HTTPS）=====
+app/src/main/assets/*.pem
+app/src/main/assets/*.p12
+*.pem
+*.p12
+*.jks
+*.keystore
+
+# ===== 调试/临时产物（截图、本地代理、Edge 测试配置、内置 JDK）=====
+screenshots/local/
+local_test_proxy.js
+preview-page.js
+preview-proxy.js
+.edge-webrtc-test/
+.edge-webrtc-candidate-test/
+jdk17/
+.sdd/
+.claude/
+
+# 本地开发记录、设计与实施计划
+docs/DEVELOPMENT.md
+docs/sdd/
+
+# ===== 日志/临时文件 =====
+*.log
+*.tmp
+~$*
+__pycache__/
+*.pyc

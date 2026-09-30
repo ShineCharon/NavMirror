@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NavMirror</string>
+    <string name="accessibility_service_description">允许车机浏览器将点击、长按、滑动以及返回、主页、最近任务操作发送到本机。仅在 NavMirror 网页手动开启反控后生效。</string>
+</resources>

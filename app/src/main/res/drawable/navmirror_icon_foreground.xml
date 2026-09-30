@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 圆润小猫：柔和猫耳与极简表情。 -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.70"
+        android:scaleY="0.70">
+        <path
+            android:fillColor="#2379E8"
+            android:pathData="M29,40 C29,34 29,29 30,25 Q31,21 35,25 L43,33 Q54,29 65,33 L73,25 Q77,21 78,25 C79,29 79,34 79,40 Q84,46 84,54 L84,69 Q84,82 71,85 L37,85 Q24,82 24,69 L24,54 Q24,46 29,40 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M46,51 A3.5,3.5 0 1 1,39,51 A3.5,3.5 0 1 1,46,51 M69,51 A3.5,3.5 0 1 1,62,51 A3.5,3.5 0 1 1,69,51" />
+        <path
+            android:fillColor="@android:color/transparent"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2.8"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M54,59 L54,62 M54,62 C51,66 48,65 47,63 M54,62 C57,66 60,65 61,63" />
+    </group>
+</vector>
